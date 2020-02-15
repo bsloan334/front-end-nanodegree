@@ -1,4 +1,14 @@
 .links {
-    align-content: stretch;
-    float: right;
+    justify-items: right;
+    
+}
+
+
+.blogs {
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows:  .45fr ;
+    grid-template-areas:
+    "one";
 }
