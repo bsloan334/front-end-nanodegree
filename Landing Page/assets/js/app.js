@@ -26,6 +26,8 @@
  * Define Global Variables
  * 
 */
+
+
 var nav = document.querySelector("#navbar__list")
 
 /**
@@ -63,27 +65,18 @@ buildNavBar()
 
 
 // Add class 'active' to section when near top of viewport
-
-
-// Scroll to anchor ID using scrollTO event
 var links = document.querySelectorAll(".links")
-console.log(links)
 links.forEach((link) => {
-    link.addEventListener("click", function() {
-        var targetID = this.getAttribute("value")
-        // console.log(typeof(targetID))
-        // console.log(typeof(link))
-        var target = document.querySelector("#" + targetID)
-        console.log(target)
-        // target.scrollTo({
-        //     top: 100,
-        //     left: 100,
-        //     behavior: "smooth"
-        // })
-        target.scrollTo(target)
-        
+    link.addEventListener("mouseenter", function(){        
+        this.classList.toggle("active")
+    })
+    link.addEventListener("mouseleave", function(){
+        this.classList.toggle("active")
     })
 })
+
+// Scroll to anchor ID using scrollTO event
+
 
 
 /**
@@ -93,7 +86,43 @@ links.forEach((link) => {
 */
 
 // Build menu 
+count = 0
+console.log(nav.childElementCount);
+var body = document.querySelector("body")
+var navbar = document.querySelector("nav")
+var topList = []
+var top = document.createElement("a")
+document.addEventListener("scroll", function() {
+    console.log(top)
+    if (topList.length < 1 && window.scrollY != 0){
+        top.href = "#"
+        top.textContent = "Top"
+        top.style.position = "fixed"
+        top.style.top = String(navbar.offsetHeight) + "px"
+        body.appendChild(top)
+        topList.push(top)
+        console.log(topList.length);
+    }
+    
+    if (window.scrollY == 0) {
+            console.log("Outside if else")
+            nav.lastChild.remove()
+    }
+    top.addEventListener("click", function(){
+        this.remove()
+        nav.scrollIntoView()
+    })
+})
 
 // Scroll to section on link click
+
+links.forEach((link) => {
+    link.addEventListener("click", function() {
+        var targetID = this.getAttribute("value")
+        var target = document.querySelector("#" + targetID)
+        target.scrollIntoView({behavior: "smooth"})
+        
+    })
+})
 
 // Set sections as active
