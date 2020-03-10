@@ -1,12 +1,3 @@
-// var h1 = document.querySelector('h1');
-// var p = document.createElement('p');
-// p.innerText = "this is cool";
-// console.log(p)
-// h1.addEventListener('click', function(){
-//     h1.appendChild(p);
-// })
-
-
 /**
  * 
  * Manipulating the DOM exercise.
@@ -49,10 +40,6 @@ function buildNavBar() {
     }
 }
 
-function smoothScroll(element) {
-    
-}
-
 
 /**
  * End Helper Functions
@@ -75,10 +62,6 @@ links.forEach((link) => {
     })
 })
 
-// Scroll to anchor ID using scrollTO event
-
-
-
 /**
  * End Main Functions
  * Begin Events
@@ -86,33 +69,42 @@ links.forEach((link) => {
 */
 
 // Build menu 
-count = 0
-console.log(nav.childElementCount);
-var body = document.querySelector("body")
-var navbar = document.querySelector("nav")
-var topList = []
-var top = document.createElement("a")
-document.addEventListener("scroll", function() {
-    console.log(top)
-    if (topList.length < 1 && window.scrollY != 0){
-        top.href = "#"
-        top.textContent = "Top"
-        top.style.position = "fixed"
-        top.style.top = String(navbar.offsetHeight) + "px"
-        body.appendChild(top)
-        topList.push(top)
-        console.log(topList.length);
-    }
-    
-    if (window.scrollY == 0) {
-            console.log("Outside if else")
-            nav.lastChild.remove()
-    }
-    top.addEventListener("click", function(){
-        this.remove()
-        nav.scrollIntoView()
+function addTopButton(){
+    var body = document.querySelector("body")
+    var navbar = document.querySelector("nav")
+    var count = 0
+    document.addEventListener("scroll", function() {
+        if (count < 1) {
+            var top = document.createElement("a")
+            if (window.scrollY != 0){
+                top.href = "#"
+                top.textContent = "Top"
+                top.style.position = "fixed"
+                top.style.top = String(navbar.offsetHeight) + "px"
+                top.classList.add("likeabutton")
+                top.style.padding = "5px"
+                top.style.margin = "5px"
+                top.style.fontSize = "20px"
+                body.appendChild(top)
+            }
+            count++
+        }
+        if (window.scrollY == 0 && count != 0) {
+            body.lastChild.remove()
+            count = 0
+        }
+        if (count < 1) {
+            top.addEventListener("click", function(){
+            this.remove()
+            nav.scrollIntoView()
+            })
+        }
+        
     })
-})
+}
+
+document.addEventListener("load", addTopButton())
+
 
 // Scroll to section on link click
 
@@ -126,3 +118,12 @@ links.forEach((link) => {
 })
 
 // Set sections as active
+var sections = document.querySelectorAll(".section")
+sections.forEach((section) => {
+    section.addEventListener("mouseenter", function(){        
+        this.classList.toggle("activeSection")
+    })
+    section.addEventListener("mouseleave", function(){
+        this.classList.toggle("activeSection")
+    })
+})
